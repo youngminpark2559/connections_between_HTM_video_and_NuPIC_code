@@ -386,9 +386,11 @@ sp=SpatialPooler(
     synPermActiveInc=0.04,
     synPermConnected=0.1,
     # @ Boosting (Episode 9), 2:41
+    # https://youtu.be/MSwoNAODrgk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=53
     # min gree box having 0.00?
     minPctOverlapDutyCycle=0.001,
     # @ Boosting (Episode 9), 2:26
+    # https://youtu.be/MSwoNAODrgk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=146
     # "certain period of time"
     dutyCyclePeriod=100,
     boostStrength=0.0,
@@ -451,6 +453,7 @@ activeColumnIndices_before_sp = np.nonzero(activeColumns)[0]
 # between input data in input space and each column in spatial pooler
 
 # @ Topology (Episode 10), 3:13
+# https://youtu.be/HTW2Q_UrkAw?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=193
 # You first prepare placeholder array for activeColumns
 # activeColumns placeholder array will be populated by spatial pooler
 
@@ -863,6 +866,7 @@ np.sort(np.unique(np.abs(np.diff(swave[:]))))[0]
 # where 1 values show up in sequence like 
 # [0 0 0 0 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 ]
 # showing in @ Scalar Encoding (Episode 5), 1:46
+# https://youtu.be/V3Yqtpytif0?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=106
 
 # RandomDistributedScalarEncoder creates array where "on-bits" cells are scattered randomly in array
 # RandomDistributedScalarEncoder shows up in 
@@ -1149,14 +1153,17 @@ sp = SpatialPooler(
     minPctOverlapDutyCycle = 0.001,
     dutyCyclePeriod = 100,
     # @ Boosting (Episode 9), 1:00
+    # https://youtu.be/MSwoNAODrgk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=60 
     # In order for column in spatial pooler
     # to express itself, that column must be selected as winning column
     # Top most columns with the highest overlaps with input space
     # being selected as winning columns
     # ...
     # @ Boosting (Episode 9), 3:54
+    # https://youtu.be/MSwoNAODrgk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=234
     # How aggressive boosting will you use for homeostasis?
     # @ Boosting (Episode 9), 7:46
+    # https://youtu.be/MSwoNAODrgk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=466
     # Advantage of using boosting
     boostStrength = 3.0, 
     seed = 42,
@@ -1214,6 +1221,7 @@ with open(_INPUT_FILE_PATH, 'r') as fin:
 
 # ======================================================================
 # @ Boosting (Episode 9), 1:00
+# https://youtu.be/MSwoNAODrgk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=60
 # You turn off boosting
 print("...all done. Turning off boosting")
 sp.setBoostStrength(0.0)
@@ -1224,12 +1232,14 @@ sp.setBoostStrength(0.0)
 
 print("Initializing temporal memory learning algorithm...")
 tm = TemporalMemory(
-    https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=600 # @ Spatial Pooling: Input Space & Connections (Episode 7), 10:18
+    # @ Spatial Pooling: Input Space & Connections (Episode 7), 10:18
+    # https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=618
     # sp.getColumnDimensions() probably means length of 1D array of spatial pooler
     # See "Spatial Pooler Columns"
     # And number of cells in it is ColumnDimensions of spatial pooler
     columnDimensions = sp.getColumnDimensions(),
-    https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=1 # @ Temporal Memory Part 1 (Episode 11), 5:04
+    # @ Temporal Memory Part 1 (Episode 11), 5:04
+    # https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=304
     # In video screenshot, there are 4 cells in per column
     # I guess this option with 16 will create 16 cells per column
     cellsPerColumn = 16,
@@ -1242,11 +1252,13 @@ tm = TemporalMemory(
     permanenceDecrement = 0.1,
     predictedSegmentDecrement = 0.0,
     seed = 42,
-    https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=1 # @ Temporal Memory Part 1 (Episode 11), 11:02
+    # @ Temporal Memory Part 1 (Episode 11), 11:02
+    # https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=662
     # Number of max "kind" of connections (like magenta colored lines) per cell (blue one)
     # In this case, there is one kind of connection (magenta color) to that blue cell
     maxSegmentsPerCell = 128,
-    https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=1 # @ Temporal Memory Part 1 (Episode 11), 10:56
+    # @ Temporal Memory Part 1 (Episode 11), 10:56
+    # https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=656
     # Number of max connections (which each kind of synapse can have) per each kind of segment
     maxSynapsesPerSegment = 40)
 
