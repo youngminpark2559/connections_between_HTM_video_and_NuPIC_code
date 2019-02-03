@@ -274,9 +274,8 @@ encodingWidth=timeOfDayEncoder.getWidth()+\
 # 4 vertically located circles consist of one minicolumn
 
 # To clarify concept of column in spatial pooler, 
-# try to imagine there is one 3x3x3 cube
-# 1x1x3 shape "3 vertically located squares" can be considered as one column, 
-# in other words, one minicolumn
+# try to imagine there are 3x3x3 cube
+# 1x1x3 shape "3 vertically located squares" are one column, in other words, one minicolumn
 
 # 3x3x3 structure which is composed of minicolumns is cortical column
 # See "Cortical Region" in following link
@@ -369,20 +368,20 @@ sp=SpatialPooler(
     # https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=556
     potentialPct=0.85,
     # @ Spatial Pooling: Learning (Episode 8), 4:10
-    # https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=250
+    # https://youtu.be/rHvjykCIrZM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=250
     globalInhibition=True,
     localAreaDensity=-1.0,
     # this value (like 40.0) / "total number of columns" = sparsity (40/2048 ~ 2%)
     # @ Spatial Pooling: Learning (Episode 8), 4:00
-    # https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=240
+    # https://youtu.be/rHvjykCIrZM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=240
     numActiveColumnsPerInhArea=40.0, 
     stimulusThreshold=0,
     # @ Spatial Pooling: Learning (Episode 8), 8:14
-    # https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=494
+    # https://youtu.be/rHvjykCIrZM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=494
     # How much permanence values decremented when spatial pooler is being diminished?
     synPermInactiveDec=0.005,  
     # @ Spatial Pooling: Learning (Episode 8), 8:07
-    # https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=487
+    # https://youtu.be/rHvjykCIrZM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=487
     # How much permanence values incremented when spatial pooler is being reinforced?
     synPermActiveInc=0.04,
     synPermConnected=0.1,
@@ -406,7 +405,7 @@ sp=SpatialPooler(
 # Running SP
 
 # @ Spatial Pooling: Learning (Episode 8), 3:53
-# https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=233
+# https://youtu.be/rHvjykCIrZM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=233
 # In right spatial pooler, you can see green colored square-shape columns
 # Those green colored square-shape columns are active column
 
@@ -423,12 +422,12 @@ sp=SpatialPooler(
 
 # And connections from column to input space are determined by threshold and permanence value
 # @ Spatial Pooling: Learning (Episode 8), 6:50 
-# https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=410
+# https://youtu.be/rHvjykCIrZM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=410 
 
 # How to learn spatial pooler?
 # In other words, how to make spatial pooler be more precise when making connections between columns and input space?
 # @ Spatial Pooling: Learning (Episode 8), 7:07
-# https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=427
+# https://youtu.be/rHvjykCIrZM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=427
 # Answer: as permanance values are dynamically up and down, 
 # connections can be created and destroyed
 # and it will make better connections from column to input data
@@ -445,7 +444,7 @@ activeColumnIndices_before_sp = np.nonzero(activeColumns)[0]
 # []
 
 # @ Spatial Pooling: Learning (Episode 8), 8:49
-# https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=529
+# https://youtu.be/rHvjykCIrZM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=529
 # I guess you can turn on-and-off learning capability of spatial pooler
 # by using True or False in sp.compute(encoding, True, activeColumns)
 
@@ -574,6 +573,8 @@ def showSDR(file_record):
 showSDR(['7/2/10 2:00',5.5])
 
 # ======================================================================
+
+
 # c tm: creating TM
 tm=TemporalMemory(
     # Must be same dimensions as SP
@@ -600,7 +601,7 @@ tm=TemporalMemory(
 
 # Choose value based on Numenta's recommendation
 # @ Spatial Pooling: Learning (Episode 8), 4:00
-# https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=240
+# https://youtu.be/rHvjykCIrZM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=240
 num_a_col_per_inh_a=sp.getNumActiveColumnsPerInhArea()
 col_dim=sp.getColumnDimensions()[0]
 perman_inc=tm.permanenceIncrement
@@ -893,7 +894,7 @@ mysp = SpatialPooler(
     columnDimensions=(1024,),
     globalInhibition=True,
     # @ Spatial Pooling: Learning (Episode 8), 4:00
-    # https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=240
+    # https://youtu.be/rHvjykCIrZM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=240
     numActiveColumnsPerInhArea=20,
     wrapAround=False)
 # print("mysp",mysp)
@@ -1139,7 +1140,7 @@ sp = SpatialPooler(
     # global coverage
     potentialRadius = encodingWidth, 
     potentialPct = 0.85,
-    # @ Spatial Pooling: Learning (Episode 8), 4:10
+    https://youtu.be/rHvjykCIrZM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=249 # @ Spatial Pooling: Learning (Episode 8), 4:10
     # https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=250
     globalInhibition = True,
     localAreaDensity = -1.0,
