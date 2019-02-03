@@ -12,6 +12,7 @@
 # Spatial Pooling: Input Space & Connections (Episode 7), 4:10
 # Spatial Pooling: Input Space & Connections (Episode 7), 8:25
 # Spatial Pooling: Input Space & Connections (Episode 7), 9:16
+# Spatial Pooling: Input Space & Connections (Episode 7), 10:18
 # Spatial Pooling: Input Space & Connections (Episode 7), 17:06
 # Spatial Pooling: Learning (Episode 8), 3:53
 # Spatial Pooling: Learning (Episode 8), 4:00
@@ -30,6 +31,7 @@
 # Temporal Memory Part 1 (Episode 11), 1:38
 # Temporal Memory Part 1 (Episode 11), 1:40
 # Temporal Memory Part 1 (Episode 11), 2:58
+# Temporal Memory Part 1 (Episode 11), 5:04
 # Temporal Memory Part 1 (Episode 11), 6:00
 # Temporal Memory Part 1 (Episode 11), 7:00
 # Temporal Memory Part 1 (Episode 11), 7:10
@@ -1170,9 +1172,19 @@ print("...all done. Turning off boosting")
 sp.setBoostStrength(0.0)
 
 # ======================================================================
-print("Initializing Temporal Memory...")
+# print('sp.getColumnDimensions()',sp.getColumnDimensions())
+# sp.getColumnDimensions() [2048]
+
+print("Initializing temporal memory learning algorithm...")
 tm = TemporalMemory(
+    # @ Spatial Pooling: Input Space & Connections (Episode 7), 10:18
+    # sp.getColumnDimensions() probably means length of 1D array of spatial pooler
+    # See "Spatial Pooler Columns"
+    # And number of cells in it is ColumnDimensions of spatial pooler
     columnDimensions = sp.getColumnDimensions(),
+    # @ Temporal Memory Part 1 (Episode 11), 5:04
+    # In video screenshot, there are 4 cells in per column
+    # I guess this option with 16 will create 16 cells per column
     cellsPerColumn = 16,
     activationThreshold = 13,
     initialPermanence = 0.55,
