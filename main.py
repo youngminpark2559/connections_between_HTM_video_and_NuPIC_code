@@ -36,11 +36,15 @@
 # Temporal Memory Part 1 (Episode 11), 7:00
 # Temporal Memory Part 1 (Episode 11), 7:10
 # Temporal Memory Part 1 (Episode 11), 8:10
-# Temporal Memory Part 1 (Episode 11) 16:30
+# Temporal Memory Part 1 (Episode 11), 10:56
+# Temporal Memory Part 1 (Episode 11), 11:02
+# Temporal Memory Part 1 (Episode 11), 16:30
 # Temporal Memory Part 2 (Episode 12), 3:06
 # Temporal Memory Part 2 (Episode 12), 3:35
 # Temporal Memory Part 2 (Episode 12), 3:56
 # Temporal Memory Part 2 (Episode 12), 4:08
+# Cortical Circuitry (Episode 13), 1:34
+# Cortical Circuitry (Episode 13), 1:52
 
 # ======================================================================
 from __future__ import division, print_function
@@ -323,12 +327,18 @@ encodingWidth=timeOfDayEncoder.getWidth()+\
 # and I consider each cell in one minicolumn as each spine) 
 # are connected to that one input space via nerve system.
 
+# @ Cortical Circuitry (Episode 13), 1:34
+# According to this, neocortex is composed of multiple cortical columns
+
+# @ Cortical Circuitry (Episode 13), 1:52
+# One cortical column is composed of thousands of pyramidal neurons (thousands of minicolumns)
+
 # Anyway, stimulus first comes into body via input space (sensory organ) 
 # and it's passed to spatial pooler.
 # And that's "proximal mechanism"
 # And spatial pooler processes that raw stimulus 
 
-# And I personally consider "distal mechanism" as connections 
+# And I personally consider "distal mechanism" as connections (synapses biologically)
 # from spine (one cell in minicolumn) to other spine (other cell in minicolumn)
 
 # c sp: you create spatial pooler
@@ -1195,7 +1205,12 @@ tm = TemporalMemory(
     permanenceDecrement = 0.1,
     predictedSegmentDecrement = 0.0,
     seed = 42,
+    # @ Temporal Memory Part 1 (Episode 11), 11:02
+    # Number of max "kind" of connections (like magenta colored lines) per cell (blue one)
+    # In this case, there is one kind of connection (magenta color) to that blue cell
     maxSegmentsPerCell = 128,
+    # @ Temporal Memory Part 1 (Episode 11), 10:56
+    # Number of max connections (which each kind of synapse can have) per each kind of segment
     maxSynapsesPerSegment = 40)
 
 # ======================================================================
