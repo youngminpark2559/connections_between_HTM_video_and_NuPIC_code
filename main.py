@@ -31,6 +31,9 @@
 # Temporal Memory Part 1 (Episode 11), 1:40
 # Temporal Memory Part 1 (Episode 11), 2:58
 # Temporal Memory Part 1 (Episode 11), 6:00
+# Temporal Memory Part 1 (Episode 11), 7:00
+# Temporal Memory Part 1 (Episode 11), 7:10
+# Temporal Memory Part 1 (Episode 11), 8:10
 
 # ======================================================================
 from __future__ import division, print_function
@@ -625,11 +628,21 @@ for i,record in enumerate(records):
     # c imgTM: placeholder for image obtained from TM, 3x3x3 shape-like
     imgTM = np.zeros(cells_per_col*col_dim[0])
 
-    # Get "active cells" from TM and assign 1 into them
+    # @ Temporal Memory Part 1 (Episode 11), 7:00
+    # When there is no bursting,
+    # active cells are  orangish yellow ones
+    # c Get "active cells" from TM and assign 1 into them
     imgTM[tm.getActiveCells()] = 1
-    # Get "predictive cells" from TM and assign 2 into them
+    
+    # @ Temporal Memory Part 1 (Episode 11), 7:10
+    # c Get "predictive cells" from TM and assign 2 into them
     imgTM[tm.getPredictiveCells()] = 2
-    # Get "winner cells" from TM and assign 3 into them
+    
+    # @ Temporal Memory Part 1 (Episode 11), 8:10
+    # How would these cells become "predictive" is related 
+    # to mechanism for choosing winner cell 
+    # as 2nd phase of temporal memory algorithm
+    # c Get "winner cells" from TM and assign 3 into them
     imgTM[tm.getWinnerCells()] = 3
 
     # c re_imgTM: reshape imgTM into 2D image shape
@@ -757,8 +770,6 @@ np.sort(np.unique(np.abs(np.diff(swave[:]))))[0]
 # 0.04894348370482271
 
 # --------------------------------------------------
-# c encoder: RandomDistributedScalarEncoder instance
-
 # @ SDR Capacity & Comparison (Episode 2), 3:00
 # You can see grid.
 # White cell means 0 (off-bit), blue cell means 1 (on-bit)
@@ -785,6 +796,7 @@ np.sort(np.unique(np.abs(np.diff(swave[:]))))[0]
 # @ Scalar Encoding (Episode 5), 8:33
 
 # resolution shows in @ Scalar Encoding (Episode 5), 9:43
+# c encoder: RandomDistributedScalarEncoder instance
 encoder = RandomDistributedScalarEncoder(resolution=0.1)
 # print("encoder",encoder)
 # RandomDistributedScalarEncoder:
@@ -820,10 +832,10 @@ for x in np.sin(np.linspace(0,100*np.pi,1000)):
     # Use spatial pooler with encoded_x, active column
     mysp.compute(encoded_x, True, dummy)
 
-# Data
+# c x: scalar input data
 x = 0.7
 
-# c d1: encode x
+# c d1: encoded x
 d1 = encoder.encode(x)
 # print("d1",d1.shape)
 # d1 (400,)
@@ -840,7 +852,7 @@ d1 = encoder.encode(x)
 #  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0
 #  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
 
-# c d2: encode x+0.1
+# c d2: encoded x+0.1
 d2 = encoder.encode(x+0.1)
 # print("d2",d2.shape)
 # d2 (400,)
@@ -876,7 +888,6 @@ sdr2 = np.zeros(num_col_2)
 mysp.compute(d1, False, sdr1)
 mysp.compute(d2, False, sdr2)
 
-
 sdrCols1 = np.nonzero(sdr1)[0]
 sdrCols2 = np.nonzero(sdr2)[0]
 
@@ -910,7 +921,7 @@ def run(
     
     sp = SpatialPooler(
         inputDimensions = (encoder.getWidth(),),
-        columnDimensions=(2048,),
+        columnDimensions = (2048,),
         potentialRadius = encoder.getWidth(),
         potentialPct = 0.85,
         globalInhibition = True,
@@ -1228,7 +1239,7 @@ with open(_INPUT_FILE_PATH, "r") as fin:
             classification={
                 "bucketIdx": bucketIdx,
                 "actValue": consumption},
-            # let classifier learn once TM has learned little
+            # Let classifier learn once TM has learned little
             learn=count > 500, 
             infer=True)
 
