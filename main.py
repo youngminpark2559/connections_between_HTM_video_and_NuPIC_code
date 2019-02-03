@@ -34,6 +34,11 @@
 # Temporal Memory Part 1 (Episode 11), 7:00
 # Temporal Memory Part 1 (Episode 11), 7:10
 # Temporal Memory Part 1 (Episode 11), 8:10
+# Temporal Memory Part 1 (Episode 11) 16:30
+# Temporal Memory Part 2 (Episode 12), 3:06
+# Temporal Memory Part 2 (Episode 12), 3:35
+# Temporal Memory Part 2 (Episode 12), 3:56
+# Temporal Memory Part 2 (Episode 12), 4:08
 
 # ======================================================================
 from __future__ import division, print_function
@@ -69,21 +74,21 @@ _INPUT_FILE_PATH = "./one_hot_gym_data.csv"
 
 # @ Datetime Encoding (Episode 6), 3:16
 
-# c timeOfDayEncoder: you create date encoder which will encode timeOfDay input data
 # (21,1) means 
 # bucket's width: 21
 # radius: 1 hour
+# c timeOfDayEncoder: you create date encoder which will encode timeOfDay input data
 timeOfDayEncoder = DateEncoder(timeOfDay=(21,1))
 # print("timeOfDayEncoder",timeOfDayEncoder)
 # <nupic.encoders.date.DateEncoder object at 0x7f94ee892f10>
 
-# c weekendEncoder: you create date encoder which will encode weekend input data
 # bucket width: 21
+# c weekendEncoder: you create date encoder which will encode weekend input data
 weekendEncoder = DateEncoder(weekend=21)
 # print("weekendEncoder",weekendEncoder)
 # <nupic.encoders.date.DateEncoder object at 0x7f94f32a4fd0>
 
-# used resolution is 0.88
+# Used resolution is 0.88
 scalarEncoder = RandomDistributedScalarEncoder(resolution=0.88)
 # print("scalarEncoder",scalarEncoder)
 # RandomDistributedScalarEncoder:
@@ -107,7 +112,7 @@ record = ['7/2/10 0:00', '21.2']
 # c dateString: convert date string '7/2/10 0:00' into Python date object
 dateString = dt.strptime(record[0], "%m/%d/%y %H:%M")
 
-# c consumption: Convert data value string '21.2' into float
+# c consumption: convert "data value" string '21.2' into float
 consumption = float(record[1])
 
 # --------------------------------------------------
@@ -117,7 +122,8 @@ consumption = float(record[1])
 # @ Datetime Encoding (Episode 6), 3:39
 # See "time of day"
 # It has 54 cells.
-# Even if it looks 2D array, just think of it 1D flattened array like following 
+# Even if it looks 2D array, just think of it 1D flattened array 
+# when it's used in real code like following 
 # (504 length in following case)
 # print("timeOfDayBits",timeOfDayBits.shape)
 # timeOfDayBits (504,)
@@ -144,6 +150,7 @@ consumptionBits = np.zeros(scalarEncoder.getWidth())
 # See "weekend"
 # weekendBits can be considered as 1D array filled by all 0s
 # like all white cells without blue cells
+# Value 1s will be filled into weekendBits by encoder after finishing encoding
 
 # In this sentence,
 # weekendEncoder.encodeIntoArray(dateString,weekendBits)
@@ -210,7 +217,7 @@ np.set_printoptions(threshold=1000)
 #  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
 
 # You can see continuous sections of "on bits" for date encodings. 
-# Near bottom, you can see "randomly" distributed on bits for scalar encoder. 
+# Near bottom, you can see "randomly" distributed on-bits for scalar encoder. 
 
 # ======================================================================
 # Another (better?) way to visualize 
@@ -250,54 +257,59 @@ encodingWidth=timeOfDayEncoder.getWidth()+\
 
 # @ Temporal Memory Part 1 (Episode 11), 1:40
 # 4 vertically located circles consist of one minicolumn
-# Imagine there are 3x3x3 cube
-# 1x1x3 3 vertically located squares are one column, in other words, minicolumn
 
-# 3x3x3 which is composed of minicolumns is cortical column
-# See Cortical Region in following link
+# To clarify concept of column in spatial pooler, 
+# try to imagine there are 3x3x3 cube
+# 1x1x3 shape "3 vertically located squares" are one column, in other words, one minicolumn
+
+# 3x3x3 structure which is composed of minicolumns is cortical column
+# See "Cortical Region" in following link
 # https://discourse.numenta.org/t/htm-cheat-sheet/828
 
 # @ Temporal Memory Part 1 (Episode 11), 2:58
 # Synapse structure
-# (connections between spine of one neuron and other spine of other neuron) 
+# (connections between "spine" of one neuron and "other spine" of other neuron) 
 
 # Take example of skin which is one of sensory organs for somatic sense.
 # There can be many areas on skin which can take stimulus from outside.
 # You can consider those many skin areas as many input spaces.
 # And each area on skin will have different potential pool,
-# for example, I think skin on elbow is weaker (small potential pool?) 
-# like following where various potential pools show
+# for example, I think skin on elbow is weaker (small potential pool?) in its sensory functionality
+# like following where various potential pools in input space show up
 # @ Spatial Pooling: Input Space & Connections (Episode 7), 8:25
 
 # @ Spatial Pooling: Input Space & Connections (Episode 7), 17:06
-# Why each column has different patterns of connection to "one input data"?
+# Why each column has different patterns of connection for "one input data"?
 # I guess one input data can fire multiple minicolumns
 # (one stimulus can fire multiple neurons in biological perspective)
-# And also one input data can fire cells in minicolumn
+# And also I guess one input data can fire multiple cells in minicolumn
 
 # I guess it sounds reasonable and efficient
-# if "multiple cells" in minicolumn extract different features from one input data
+# if "multiple cells" in minicolumn extract different features and context from one input data
 
-# I guess this is almost same logic 
-# where multiple image filters extract multiple spatial features 
-# from one image in CNN methodology of deep learning.
+# I guess this is observed as almost same logic in CNN methodology of deep learning
+# in where multiple image filters extract multiple spatial features from one image.
 
 # Anyway, by using several criterions 
 # like threshold on permanance values in potential pools,
 # spatial pooler can extract various features from one input data.
-# And I guess those various features from one input data represent 
-# various patterns of connection at each column.
+# And I guess those various features from one input data can be represented 
+# by various patterns of connection at each column to input data in input space.
 
 # And I guess one final SDR in spatial pooler 
-# which semantically represents one input data is generated.
+# which semantically represents one input data is generated through above step.
 
 # Anyway, final relationship seems 
-# like "1 input data" corresponds to "1 SDR in spatial pooler".
+# like "one number of input data" corresponds to "one number of SDR in spatial pooler".
 
-# It's just to find "1 SDR in spatial pooler" 
-# which best semantically and robustly can represent "1 input data" 
+# It's just way to find "one number of SDR in spatial pooler" 
+# which best semantically against spatial fatures 
+# and robustly against noises can represent "one number of input data" 
 # I guess you need multiple patterns of connection 
 # between each column and input data
+
+# Explanations which seems related come in
+# @ Temporal Memory Part 2 (Episode 12), 3:06
 
 # Being returned to original topic, 
 # according to following part, 
@@ -359,18 +371,18 @@ sp=SpatialPooler(
 # Running SP
 
 # @ Spatial Pooling: Learning (Episode 8), 3:53
-# In right spatial pooler, you can see green colored squre-shape columns
-# Those green colored squre-shape columns are active column
+# In right spatial pooler, you can see green colored square-shape columns
+# Those green colored square-shape columns are active column
 
 # How are those active columns determined?
-# You can (probably) set parameter for overlap score
+# You can (probably) configure parameter for overlap score
 # And with that configured overlap score parameter,
-# and if some column of right spatial pooler has more connections 
+# and if some column in right spatial pooler has more number of connections 
 # (which are finally represented by green circles in left input space) 
-# which fall into blue cells (on-bits) in left input space
-# that column is categorized into active column
+# which fall into blue cells (which mean on-bits in input space) in left input space
+# that column will be categorized into active column
 
-# Gray circles represent connections from that column
+# Gray circles represent connections from that column to input data
 # but cell which has gray circle is not on-bit. It's off-bit (0 value)
 
 # And connections from column to input space are determined by threshold and permanence value
@@ -381,6 +393,7 @@ sp=SpatialPooler(
 # @ Spatial Pooling: Learning (Episode 8), 7:07
 # Answer: as permanance values are dynamically up and down, 
 # connections can be created and destroyed
+# and it will make better connections from column to input data
 
 # c activeColumns: Create "array" to represent "active columns" in spatial pooler SDR
 # c activeColumns: Placeholder for active columns is populated by spatial_pooler.compute()
@@ -394,16 +407,16 @@ activeColumnIndices_before_sp = np.nonzero(activeColumns)[0]
 # []
 
 # @ Spatial Pooling: Learning (Episode 8), 8:49
-# I guess you can turn on and off learning capability of spatila pooler
-# by using True or False
+# I guess you can turn on-and-off learning capability of spatial pooler
+# by using True or False in sp.compute(encoding, True, activeColumns)
 
-# If you say True, you increment or decrement permanance values 
-# to adjust and finally find best connection 
+# If you say True, you dynamically increment or decrement permanance values 
+# to adjust connections and to finally find best connection pattern 
 # between input data in input space and each column in spatial pooler
 
 # @ Topology (Episode 10), 3:13
 # You first prepare placeholder array for activeColumns
-# activeColumns is populated by spatial pooler
+# activeColumns placeholder array will be populated by spatial pooler
 
 # c Execute "Spatial Pooling algorithm" with "input data" called encoding 
 # and placeholder for active column called activeColumnIndices
@@ -606,10 +619,10 @@ for i,record in enumerate(records):
 
     # --------------------------------------------------
     # Temporal Memory Part 1 (Episode 11), 6:00
-    # Temporal memory learning sees all active columns (yellow ones)
-    # at first stage
+    # Temporal memory learning sees all active columns (yellow ones) at first stage
     # Then, bursting is performed 
     # when there is no predictive cells in active columns
+    # In other words, bursting happens when temporal learning algorithm sees somehing for the first time
     # c Use temporal memory algorithm
     tm.compute(activeColumnIndices,learn=True)
 
@@ -630,7 +643,11 @@ for i,record in enumerate(records):
 
     # @ Temporal Memory Part 1 (Episode 11), 7:00
     # When there is no bursting,
-    # active cells are  orangish yellow ones
+    # active cells are orangish yellow ones
+
+    # @ Temporal Memory Part 2 (Episode 12), 3:56
+    # About burst
+
     # c Get "active cells" from TM and assign 1 into them
     imgTM[tm.getActiveCells()] = 1
     
@@ -639,9 +656,20 @@ for i,record in enumerate(records):
     imgTM[tm.getPredictiveCells()] = 2
     
     # @ Temporal Memory Part 1 (Episode 11), 8:10
-    # How would these cells become "predictive" is related 
+    # "How would these cells become predictive state" is related 
     # to mechanism for choosing winner cell 
-    # as 2nd phase of temporal memory algorithm
+    # which is 2nd phase of temporal memory algorithm
+
+    # @ Temporal Memory Part 1 (Episode 11), 16:30
+    # Another meaning of winner cell is for selecting specific cell based on context
+    # eat' which is followed by boys is represented by winner cells as screenshot
+
+    # @ Temporal Memory Part 2 (Episode 12), 3:35
+    # Another meaning of winner cell is for selecting specific cell based on context
+
+    # @ Temporal Memory Part 2 (Episode 12), 4:08
+    # Winner cell idea
+
     # c Get "winner cells" from TM and assign 3 into them
     imgTM[tm.getWinnerCells()] = 3
 
@@ -791,7 +819,7 @@ np.sort(np.unique(np.abs(np.diff(swave[:]))))[0]
 # [0 0 0 0 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 ]
 # showing in @ Scalar Encoding (Episode 5), 1:46
 
-# RandomDistributedScalarEncoder creates array where "on-bits" cells are scattered randomly on 2D array
+# RandomDistributedScalarEncoder creates array where "on-bits" cells are scattered randomly in array
 # RandomDistributedScalarEncoder shows up in 
 # @ Scalar Encoding (Episode 5), 8:33
 
@@ -1268,7 +1296,7 @@ plt.plot(consumption)
 plt.xlim(0, 4400)
 plt.xticks(range(0,4401,250))
 plt.show()
-afaf
+
 # So, if I had to guess, 
 # I'd say 3 things pop out as potential anomalies. 
 
