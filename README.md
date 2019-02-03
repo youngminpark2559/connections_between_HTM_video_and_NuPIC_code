@@ -40,8 +40,8 @@ Scalar Encoding (Episode 5), 9:43
 ...  
 
 And each part has direct link to video like this  
-@ Datetime Encoding (Episode 6), 3:16
-https://youtu.be/PTYlge2K1G8?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=196
+@ Datetime Encoding (Episode 6), 3:16  
+https://youtu.be/PTYlge2K1G8?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=196  
 ...
 
 ======================================================================  
