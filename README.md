@@ -38,14 +38,19 @@ Scalar Encoding (Episode 5), 1:46
 Scalar Encoding (Episode 5), 8:33  
 Scalar Encoding (Episode 5), 9:43  
 ...  
-  
+
+And each part has direct link to video like this  
+@ Datetime Encoding (Episode 6), 3:16
+https://youtu.be/PTYlge2K1G8?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=196
+...
+
 ======================================================================  
 Each part has @ mark like following.  
 @ Datetime Encoding (Episode 6), 3:16  
   
 So if you search "@ ",  
 you can jump to all of parts easily.  
-  
+
 ======================================================================  
 How to use  
   
