@@ -274,8 +274,9 @@ encodingWidth=timeOfDayEncoder.getWidth()+\
 # 4 vertically located circles consist of one minicolumn
 
 # To clarify concept of column in spatial pooler, 
-# try to imagine there are 3x3x3 cube
-# 1x1x3 shape "3 vertically located squares" are one column, in other words, one minicolumn
+# try to imagine there is one 3x3x3 cube
+# 1x1x3 shape "3 vertically located squares" can be considered as one column, 
+# in other words, one minicolumn
 
 # 3x3x3 structure which is composed of minicolumns is cortical column
 # See "Cortical Region" in following link
