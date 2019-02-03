@@ -18,6 +18,11 @@
 # Spatial Pooling: Learning (Episode 8), 8:07
 # Spatial Pooling: Learning (Episode 8), 8:14
 # Spatial Pooling: Learning (Episode 8), 8:49
+# Boosting (Episode 9), 1:00
+# Boosting (Episode 9), 2:26
+# Boosting (Episode 9), 2:41
+# Boosting (Episode 9), 3:54
+# Boosting (Episode 9), 7:46
 
 # ======================================================================
 from __future__ import division, print_function
@@ -46,7 +51,7 @@ colors = [(0,0,0), (0.5,0.5,0.5), (1,1,0), (0,1,1)]
 
 tm_cmap = LinearSegmentedColormap.from_list('tm', colors, N=4)
   
-_INPUT_FILE_PATH = "/mnt/1T-5e7/mycodehtml/bio_health/nupic/materials_from_github/one_hot_gym_data.csv"
+_INPUT_FILE_PATH = "./one_hot_gym_data.csv"
 
 # ======================================================================
 # Encoding Data
@@ -98,7 +103,6 @@ consumption = float(record[1])
 # To encode input data, 
 # you need to provide "numpy arrays" as placeholders to encoders
 
-
 # @ Datetime Encoding (Episode 6), 3:39
 # See "time of day"
 # It has 54 cells.
@@ -139,20 +143,20 @@ consumptionBits = np.zeros(scalarEncoder.getWidth())
 # Encoded data is what you can see under "weekend" in video screenshot
 # Datetime Encoding (Episode 6), 3:39
 
-# You perform encoding input data by using dateString (input data) and timeOfDayBits (input space array)
+# c You perform encoding input data by using dateString (input data) and timeOfDayBits (input space array)
 timeOfDayEncoder.encodeIntoArray(dateString,timeOfDayBits)
 
-# You perform encoding input data by using dateString (input data) and weekendBits (input space array)
+# c You perform encoding input data by using dateString (input data) and weekendBits (input space array)
 weekendEncoder.encodeIntoArray(dateString,weekendBits)
 
-# You perform encoding input data by using consumption (input data) and consumptionBits (input space array)
+# c You perform encoding input data by using consumption (input data) and consumptionBits (input space array)
 scalarEncoder.encodeIntoArray(consumption,consumptionBits)
 
 # --------------------------------------------------
 # @ Datetime Encoding (Episode 6), 3:39
 # See "entire encoding"
 
-# Concatenate all encodings into one entire encoding
+# c Concatenate all encodings into one entire encoding
 encoding=np.concatenate(
     (timeOfDayBits,weekendBits,consumptionBits))
 # print("encoding",encoding.shape)
@@ -253,7 +257,11 @@ sp=SpatialPooler(
     # How much permanence values incremented when spatial pooler is being reinforced?
     synPermActiveInc=0.04,
     synPermConnected=0.1,
+    # @ Boosting (Episode 9), 2:41
+    # min gree box having 0.00?
     minPctOverlapDutyCycle=0.001,
+    # @ Boosting (Episode 9), 2:26
+    # "certain period of time"
     dutyCyclePeriod=100,
     boostStrength=0.0,
     seed=42,
@@ -585,6 +593,7 @@ for i in range(3*N):
         classification=dict_f_clsc, 
         learn=True, 
         infer=False)
+
 print("Sequence trained on: {{{0}, {1}, {2}}}".format(*vals))
 print("Predicting what comes {} steps later\n".format(num_of_steps))
 # Sequence trained on: {4.5, 23.4, 56.7}
@@ -959,7 +968,16 @@ sp = SpatialPooler(
     synPermConnected = 0.1,
     minPctOverlapDutyCycle = 0.001,
     dutyCyclePeriod = 100,
-    # boost little
+    # @ Boosting (Episode 9), 1:00
+    # In order for column in spatial pooler
+    # to express itself, that column must be selected as winning column
+    # Top most columns with the highest overlaps with input space
+    # being selected as winning columns
+    # ...
+    # @ Boosting (Episode 9), 3:54
+    # How aggressive boosting will you use for homeostasis?
+    # @ Boosting (Episode 9), 7:46
+    # Advantage of using boosting
     boostStrength = 3.0, 
     seed = 42,
     spVerbosity = 0,
@@ -1015,6 +1033,8 @@ with open(_INPUT_FILE_PATH, 'r') as fin:
         sp.compute(encoding, True, activeColumns)
 
 # ======================================================================
+# @ Boosting (Episode 9), 1:00
+# You turn off boosting
 print("...all done. Turning off boosting")
 sp.setBoostStrength(0.0)
 
