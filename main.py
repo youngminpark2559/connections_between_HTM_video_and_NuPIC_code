@@ -286,7 +286,6 @@ encodingWidth=timeOfDayEncoder.getWidth()+\
 # https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=178
 # Synapse structure
 # (connections between "spine" of one neuron and "other spine" of other neuron) 
-
 # Take example of skin which is one of sensory organs for somatic sense.
 # There can be many areas on skin which can take stimulus from outside.
 # You can consider those many skin areas as many input spaces.
@@ -329,11 +328,12 @@ encodingWidth=timeOfDayEncoder.getWidth()+\
 
 # Explanations which seems related come in
 # @ Temporal Memory Part 2 (Episode 12), 3:06
-# https://youtu.be/1OhY_u3NjdM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=1080
+# https://youtu.be/1OhY_u3NjdM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=186
 
 # Being returned to original topic, 
 # according to following part, 
-# Temporal Memory Part 1 (Episode 11), 1:40
+# @ Temporal Memory Part 1 (Episode 11), 1:40
+# https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=100
 # you'll think of just "one input space" than "multiple input spaces"
 
 # I guess many neurons 
@@ -380,14 +380,14 @@ sp=SpatialPooler(
     # @ Spatial Pooling: Learning (Episode 8), 8:14
     # https://youtu.be/rHvjykCIrZM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=494
     # How much permanence values decremented when spatial pooler is being diminished?
-    synPermInactiveDec=0.005,  
+    synPermInactiveDec=0.005,
     # @ Spatial Pooling: Learning (Episode 8), 8:07
     # https://youtu.be/rHvjykCIrZM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=487
     # How much permanence values incremented when spatial pooler is being reinforced?
     synPermActiveInc=0.04,
     synPermConnected=0.1,
     # @ Boosting (Episode 9), 2:41
-    # https://youtu.be/MSwoNAODrgk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=53
+    # https://youtu.be/MSwoNAODrgk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=161
     # min gree box having 0.00?
     minPctOverlapDutyCycle=0.001,
     # @ Boosting (Episode 9), 2:26
