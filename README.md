@@ -51,6 +51,7 @@ How to use
   
 1. Install NuPIC according to   
 https://github.com/numenta/nupic#installing-nupic  
-  
-2. Run code  
+2. Download one_hot_gym_data.csv contained in this repository  
+and set its path into code by searching one_hot_gym_data (variable name is _INPUT_FILE_PATH) in code  
+3. Run code  
 python connection_between_video_and_code.py  
