@@ -1141,8 +1141,8 @@ sp = SpatialPooler(
     # global coverage
     potentialRadius = encodingWidth, 
     potentialPct = 0.85,
-    https://youtu.be/rHvjykCIrZM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=249 # @ Spatial Pooling: Learning (Episode 8), 4:10
-    # https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=250
+    # @ Spatial Pooling: Learning (Episode 8), 4:10
+    # https://youtu.be/rHvjykCIrZM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=250
     globalInhibition = True,
     localAreaDensity = -1.0,
     # 2% sparsity
