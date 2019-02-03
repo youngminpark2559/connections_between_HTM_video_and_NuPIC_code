@@ -79,6 +79,7 @@ _INPUT_FILE_PATH = "./one_hot_gym_data.csv"
 # Encoding Data
 
 # @ Datetime Encoding (Episode 6), 3:16
+# https://youtu.be/PTYlge2K1G8?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=196
 
 # (21,1) means 
 # bucket's width: 21
@@ -109,7 +110,10 @@ scalarEncoder = RandomDistributedScalarEncoder(resolution=0.88)
 
 # ======================================================================
 # @ Datetime Encoding (Episode 6), 4:11 
+# https://youtu.be/PTYlge2K1G8?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=251
+
 # @ Spatial Pooling: Input Space & Connections (Episode 7), 4:10
+# https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=250
 
 # c record: Make up some fake data composed of date data 
 # c record: and power consumption scalar data
@@ -126,6 +130,7 @@ consumption = float(record[1])
 # you need to provide "numpy arrays" as placeholders to encoders
 
 # @ Datetime Encoding (Episode 6), 3:39
+# https://youtu.be/PTYlge2K1G8?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=219
 # See "time of day"
 # It has 54 cells.
 # Even if it looks 2D array, just think of it 1D flattened array 
@@ -153,6 +158,7 @@ consumptionBits = np.zeros(scalarEncoder.getWidth())
 
 # --------------------------------------------------
 # @ Datetime Encoding (Episode 6), 3:39
+# https://youtu.be/PTYlge2K1G8?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=219
 # See "weekend"
 # weekendBits can be considered as 1D array filled by all 0s
 # like all white cells without blue cells
@@ -174,6 +180,7 @@ timeOfDayEncoder.encodeIntoArray(dateString,timeOfDayBits)
 weekendEncoder.encodeIntoArray(dateString,weekendBits)
 
 # @ Temporal Memory Part 1 (Episode 11), 1:38
+# https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=98
 # Green grid is input space
 # Green circles are on-bits in input space
 
@@ -182,6 +189,7 @@ scalarEncoder.encodeIntoArray(consumption,consumptionBits)
 
 # --------------------------------------------------
 # @ Datetime Encoding (Episode 6), 3:39
+# https://youtu.be/PTYlge2K1G8?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=219
 # See "entire encoding"
 
 # c Concatenate all encodings into one entire encoding
@@ -262,6 +270,7 @@ encodingWidth=timeOfDayEncoder.getWidth()+\
 # encodingWidth 946
 
 # @ Temporal Memory Part 1 (Episode 11), 1:40
+# https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=100
 # 4 vertically located circles consist of one minicolumn
 
 # To clarify concept of column in spatial pooler, 
@@ -273,6 +282,7 @@ encodingWidth=timeOfDayEncoder.getWidth()+\
 # https://discourse.numenta.org/t/htm-cheat-sheet/828
 
 # @ Temporal Memory Part 1 (Episode 11), 2:58
+# https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=178
 # Synapse structure
 # (connections between "spine" of one neuron and "other spine" of other neuron) 
 
@@ -283,8 +293,10 @@ encodingWidth=timeOfDayEncoder.getWidth()+\
 # for example, I think skin on elbow is weaker (small potential pool?) in its sensory functionality
 # like following where various potential pools in input space show up
 # @ Spatial Pooling: Input Space & Connections (Episode 7), 8:25
+# https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=505
 
 # @ Spatial Pooling: Input Space & Connections (Episode 7), 17:06
+# https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=1026
 # Why each column has different patterns of connection for "one input data"?
 # I guess one input data can fire multiple minicolumns
 # (one stimulus can fire multiple neurons in biological perspective)
@@ -316,6 +328,7 @@ encodingWidth=timeOfDayEncoder.getWidth()+\
 
 # Explanations which seems related come in
 # @ Temporal Memory Part 2 (Episode 12), 3:06
+# https://youtu.be/1OhY_u3NjdM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=1080
 
 # Being returned to original topic, 
 # according to following part, 
@@ -328,9 +341,11 @@ encodingWidth=timeOfDayEncoder.getWidth()+\
 # are connected to that one input space via nerve system.
 
 # @ Cortical Circuitry (Episode 13), 1:34
+# https://youtu.be/mPFx9yuV1Os?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=94
 # According to this, neocortex is composed of multiple cortical columns
 
 # @ Cortical Circuitry (Episode 13), 1:52
+# https://youtu.be/mPFx9yuV1Os?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=112
 # One cortical column is composed of thousands of pyramidal neurons (thousands of minicolumns)
 
 # Anyway, stimulus first comes into body via input space (sensory organ) 
@@ -350,18 +365,23 @@ sp=SpatialPooler(
     # to see "every cell" of input space
     potentialRadius=encodingWidth,
     # @ Spatial Pooling: Input Space & Connections (Episode 7), 9:16
+    # https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=556
     potentialPct=0.85,
     # @ Spatial Pooling: Learning (Episode 8), 4:10
+    # https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=250
     globalInhibition=True,
     localAreaDensity=-1.0,
     # this value (like 40.0) / "total number of columns" = sparsity (40/2048 ~ 2%)
     # @ Spatial Pooling: Learning (Episode 8), 4:00
+    # https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=240
     numActiveColumnsPerInhArea=40.0, 
     stimulusThreshold=0,
     # @ Spatial Pooling: Learning (Episode 8), 8:14
+    # https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=494
     # How much permanence values decremented when spatial pooler is being diminished?
     synPermInactiveDec=0.005,  
     # @ Spatial Pooling: Learning (Episode 8), 8:07
+    # https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=487
     # How much permanence values incremented when spatial pooler is being reinforced?
     synPermActiveInc=0.04,
     synPermConnected=0.1,
@@ -383,6 +403,7 @@ sp=SpatialPooler(
 # Running SP
 
 # @ Spatial Pooling: Learning (Episode 8), 3:53
+# https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=233
 # In right spatial pooler, you can see green colored square-shape columns
 # Those green colored square-shape columns are active column
 
@@ -398,11 +419,13 @@ sp=SpatialPooler(
 # but cell which has gray circle is not on-bit. It's off-bit (0 value)
 
 # And connections from column to input space are determined by threshold and permanence value
-# @ Spatial Pooling: Learning (Episode 8), 6:50
+# @ Spatial Pooling: Learning (Episode 8), 6:50 
+# https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=410
 
 # How to learn spatial pooler?
 # In other words, how to make spatial pooler be more precise when making connections between columns and input space?
 # @ Spatial Pooling: Learning (Episode 8), 7:07
+# https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=427
 # Answer: as permanance values are dynamically up and down, 
 # connections can be created and destroyed
 # and it will make better connections from column to input data
@@ -419,6 +442,7 @@ activeColumnIndices_before_sp = np.nonzero(activeColumns)[0]
 # []
 
 # @ Spatial Pooling: Learning (Episode 8), 8:49
+# https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=529
 # I guess you can turn on-and-off learning capability of spatial pooler
 # by using True or False in sp.compute(encoding, True, activeColumns)
 
@@ -574,6 +598,7 @@ tm=TemporalMemory(
 
 # Choose value based on Numenta's recommendation
 # @ Spatial Pooling: Learning (Episode 8), 4:00
+# https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=240
 num_a_col_per_inh_a=sp.getNumActiveColumnsPerInhArea()
 col_dim=sp.getColumnDimensions()[0]
 perman_inc=tm.permanenceIncrement
@@ -654,32 +679,39 @@ for i,record in enumerate(records):
     imgTM = np.zeros(cells_per_col*col_dim[0])
 
     # @ Temporal Memory Part 1 (Episode 11), 7:00
+    # https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=420
     # When there is no bursting,
     # active cells are orangish yellow ones
 
     # @ Temporal Memory Part 2 (Episode 12), 3:56
+    # https://youtu.be/1OhY_u3NjdM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=236
     # About burst
 
     # c Get "active cells" from TM and assign 1 into them
     imgTM[tm.getActiveCells()] = 1
     
     # @ Temporal Memory Part 1 (Episode 11), 7:10
+    # https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=430
     # c Get "predictive cells" from TM and assign 2 into them
     imgTM[tm.getPredictiveCells()] = 2
     
     # @ Temporal Memory Part 1 (Episode 11), 8:10
+    # https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=490
     # "How would these cells become predictive state" is related 
     # to mechanism for choosing winner cell 
     # which is 2nd phase of temporal memory algorithm
 
     # @ Temporal Memory Part 1 (Episode 11), 16:30
+    # https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=990
     # Another meaning of winner cell is for selecting specific cell based on context
     # eat' which is followed by boys is represented by winner cells as screenshot
 
     # @ Temporal Memory Part 2 (Episode 12), 3:35
+    # https://youtu.be/1OhY_u3NjdM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=215
     # Another meaning of winner cell is for selecting specific cell based on context
 
     # @ Temporal Memory Part 2 (Episode 12), 4:08
+    # https://youtu.be/1OhY_u3NjdM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=248
     # Winner cell idea
 
     # c Get "winner cells" from TM and assign 3 into them
@@ -811,6 +843,7 @@ np.sort(np.unique(np.abs(np.diff(swave[:]))))[0]
 
 # --------------------------------------------------
 # @ SDR Capacity & Comparison (Episode 2), 3:00
+# https://youtu.be/ZDgCdWTuIzc?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=180
 # You can see grid.
 # White cell means 0 (off-bit), blue cell means 1 (on-bit)
 
@@ -834,8 +867,10 @@ np.sort(np.unique(np.abs(np.diff(swave[:]))))[0]
 # RandomDistributedScalarEncoder creates array where "on-bits" cells are scattered randomly in array
 # RandomDistributedScalarEncoder shows up in 
 # @ Scalar Encoding (Episode 5), 8:33
+# https://youtu.be/V3Yqtpytif0?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=514
 
 # resolution shows in @ Scalar Encoding (Episode 5), 9:43
+# https://youtu.be/V3Yqtpytif0?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=583
 # c encoder: RandomDistributedScalarEncoder instance
 encoder = RandomDistributedScalarEncoder(resolution=0.1)
 # print("encoder",encoder)
@@ -855,6 +890,7 @@ mysp = SpatialPooler(
     columnDimensions=(1024,),
     globalInhibition=True,
     # @ Spatial Pooling: Learning (Episode 8), 4:00
+    # https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=240
     numActiveColumnsPerInhArea=20,
     wrapAround=False)
 # print("mysp",mysp)
@@ -1101,6 +1137,7 @@ sp = SpatialPooler(
     potentialRadius = encodingWidth, 
     potentialPct = 0.85,
     # @ Spatial Pooling: Learning (Episode 8), 4:10
+    # https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=250
     globalInhibition = True,
     localAreaDensity = -1.0,
     # 2% sparsity
@@ -1187,12 +1224,12 @@ sp.setBoostStrength(0.0)
 
 print("Initializing temporal memory learning algorithm...")
 tm = TemporalMemory(
-    # @ Spatial Pooling: Input Space & Connections (Episode 7), 10:18
+    https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=600 # @ Spatial Pooling: Input Space & Connections (Episode 7), 10:18
     # sp.getColumnDimensions() probably means length of 1D array of spatial pooler
     # See "Spatial Pooler Columns"
     # And number of cells in it is ColumnDimensions of spatial pooler
     columnDimensions = sp.getColumnDimensions(),
-    # @ Temporal Memory Part 1 (Episode 11), 5:04
+    https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=1 # @ Temporal Memory Part 1 (Episode 11), 5:04
     # In video screenshot, there are 4 cells in per column
     # I guess this option with 16 will create 16 cells per column
     cellsPerColumn = 16,
@@ -1205,11 +1242,11 @@ tm = TemporalMemory(
     permanenceDecrement = 0.1,
     predictedSegmentDecrement = 0.0,
     seed = 42,
-    # @ Temporal Memory Part 1 (Episode 11), 11:02
+    https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=1 # @ Temporal Memory Part 1 (Episode 11), 11:02
     # Number of max "kind" of connections (like magenta colored lines) per cell (blue one)
     # In this case, there is one kind of connection (magenta color) to that blue cell
     maxSegmentsPerCell = 128,
-    # @ Temporal Memory Part 1 (Episode 11), 10:56
+    https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=1 # @ Temporal Memory Part 1 (Episode 11), 10:56
     # Number of max connections (which each kind of synapse can have) per each kind of segment
     maxSynapsesPerSegment = 40)
 
