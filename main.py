@@ -10,6 +10,9 @@
 # Datetime Encoding (Episode 6), 3:39
 # Datetime Encoding (Episode 6), 4:11
 # Spatial Pooling: Input Space & Connections (Episode 7), 4:10
+# Spatial Pooling: Input Space & Connections (Episode 7), 8:25
+# Spatial Pooling: Input Space & Connections (Episode 7), 9:16
+# Spatial Pooling: Input Space & Connections (Episode 7), 17:06
 # Spatial Pooling: Learning (Episode 8), 3:53
 # Spatial Pooling: Learning (Episode 8), 4:00
 # Spatial Pooling: Learning (Episode 8), 4:10
@@ -23,6 +26,11 @@
 # Boosting (Episode 9), 2:41
 # Boosting (Episode 9), 3:54
 # Boosting (Episode 9), 7:46
+# Topology (Episode 10), 3:13
+# Temporal Memory Part 1 (Episode 11), 1:38
+# Temporal Memory Part 1 (Episode 11), 1:40
+# Temporal Memory Part 1 (Episode 11), 2:58
+# Temporal Memory Part 1 (Episode 11), 6:00
 
 # ======================================================================
 from __future__ import division, print_function
@@ -149,6 +157,10 @@ timeOfDayEncoder.encodeIntoArray(dateString,timeOfDayBits)
 # c You perform encoding input data by using dateString (input data) and weekendBits (input space array)
 weekendEncoder.encodeIntoArray(dateString,weekendBits)
 
+# @ Temporal Memory Part 1 (Episode 11), 1:38
+# Green grid is input space
+# Green circles are on-bits in input space
+
 # c You perform encoding input data by using consumption (input data) and consumptionBits (input space array)
 scalarEncoder.encodeIntoArray(consumption,consumptionBits)
 
@@ -233,6 +245,75 @@ encodingWidth=timeOfDayEncoder.getWidth()+\
 # print("encodingWidth",encodingWidth)
 # encodingWidth 946
 
+# @ Temporal Memory Part 1 (Episode 11), 1:40
+# 4 vertically located circles consist of one minicolumn
+# Imagine there are 3x3x3 cube
+# 1x1x3 3 vertically located squares are one column, in other words, minicolumn
+
+# 3x3x3 which is composed of minicolumns is cortical column
+# See Cortical Region in following link
+# https://discourse.numenta.org/t/htm-cheat-sheet/828
+
+# @ Temporal Memory Part 1 (Episode 11), 2:58
+# Synapse structure
+# (connections between spine of one neuron and other spine of other neuron) 
+
+# Take example of skin which is one of sensory organs for somatic sense.
+# There can be many areas on skin which can take stimulus from outside.
+# You can consider those many skin areas as many input spaces.
+# And each area on skin will have different potential pool,
+# for example, I think skin on elbow is weaker (small potential pool?) 
+# like following where various potential pools show
+# @ Spatial Pooling: Input Space & Connections (Episode 7), 8:25
+
+# @ Spatial Pooling: Input Space & Connections (Episode 7), 17:06
+# Why each column has different patterns of connection to "one input data"?
+# I guess one input data can fire multiple minicolumns
+# (one stimulus can fire multiple neurons in biological perspective)
+# And also one input data can fire cells in minicolumn
+
+# I guess it sounds reasonable and efficient
+# if "multiple cells" in minicolumn extract different features from one input data
+
+# I guess this is almost same logic 
+# where multiple image filters extract multiple spatial features 
+# from one image in CNN methodology of deep learning.
+
+# Anyway, by using several criterions 
+# like threshold on permanance values in potential pools,
+# spatial pooler can extract various features from one input data.
+# And I guess those various features from one input data represent 
+# various patterns of connection at each column.
+
+# And I guess one final SDR in spatial pooler 
+# which semantically represents one input data is generated.
+
+# Anyway, final relationship seems 
+# like "1 input data" corresponds to "1 SDR in spatial pooler".
+
+# It's just to find "1 SDR in spatial pooler" 
+# which best semantically and robustly can represent "1 input data" 
+# I guess you need multiple patterns of connection 
+# between each column and input data
+
+# Being returned to original topic, 
+# according to following part, 
+# Temporal Memory Part 1 (Episode 11), 1:40
+# you'll think of just "one input space" than "multiple input spaces"
+
+# I guess many neurons 
+# (I personally consider one minicolumn as one neuron, 
+# and I consider each cell in one minicolumn as each spine) 
+# are connected to that one input space via nerve system.
+
+# Anyway, stimulus first comes into body via input space (sensory organ) 
+# and it's passed to spatial pooler.
+# And that's "proximal mechanism"
+# And spatial pooler processes that raw stimulus 
+
+# And I personally consider "distal mechanism" as connections 
+# from spine (one cell in minicolumn) to other spine (other cell in minicolumn)
+
 # c sp: you create spatial pooler
 sp=SpatialPooler(
     inputDimensions=(encodingWidth,),
@@ -241,7 +322,7 @@ sp=SpatialPooler(
     # let's "every column" of spatial pooler 
     # to see "every cell" of input space
     potentialRadius=encodingWidth,
-    # but use only random 85% of them 
+    # @ Spatial Pooling: Input Space & Connections (Episode 7), 9:16
     potentialPct=0.85,
     # @ Spatial Pooling: Learning (Episode 8), 4:10
     globalInhibition=True,
@@ -316,6 +397,10 @@ activeColumnIndices_before_sp = np.nonzero(activeColumns)[0]
 # If you say True, you increment or decrement permanance values 
 # to adjust and finally find best connection 
 # between input data in input space and each column in spatial pooler
+
+# @ Topology (Episode 10), 3:13
+# You first prepare placeholder array for activeColumns
+# activeColumns is populated by spatial pooler
 
 # c Execute "Spatial Pooling algorithm" with "input data" called encoding 
 # and placeholder for active column called activeColumnIndices
@@ -433,6 +518,8 @@ def showSDR(file_record):
 showSDR(['7/2/10 2:00',5.5])
 
 # ======================================================================
+
+
 # c tm: creating TM
 tm=TemporalMemory(
     # Must be same dimensions as SP
@@ -515,7 +602,12 @@ for i,record in enumerate(records):
     activeColumnIndices=activeColumnIndices[0]
 
     # --------------------------------------------------
-    # Use temporal memory algorithm
+    # Temporal Memory Part 1 (Episode 11), 6:00
+    # Temporal memory learning sees all active columns (yellow ones)
+    # at first stage
+    # Then, bursting is performed 
+    # when there is no predictive cells in active columns
+    # c Use temporal memory algorithm
     tm.compute(activeColumnIndices,learn=True)
 
     # Get all cells from one column
