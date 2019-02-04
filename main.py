@@ -2,7 +2,11 @@
 
 # ======================================================================
 # List
+# SDR Capacity & Comparison (Episode 2), 0:45
 # SDR Capacity & Comparison (Episode 2), 3:00
+# SDR Capacity & Comparison (Episode 2), 7:36
+# SDR Capacity & Comparison (Episode 2), 8:10
+# SDR Capacity & Comparison (Episode 2), 10:52
 # Scalar Encoding (Episode 5), 1:46
 # Scalar Encoding (Episode 5), 8:33
 # Scalar Encoding (Episode 5), 9:43
@@ -80,6 +84,7 @@ _INPUT_FILE_PATH = "./one_hot_gym_data.csv"
 
 # @ Datetime Encoding (Episode 6), 3:16
 # https://youtu.be/PTYlge2K1G8?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=196
+# You can see how date type input data can be encoded by DateEncoder
 
 # (21,1) means 
 # bucket's width: 21
@@ -111,12 +116,13 @@ scalarEncoder = RandomDistributedScalarEncoder(resolution=0.88)
 # ======================================================================
 # @ Datetime Encoding (Episode 6), 4:11 
 # https://youtu.be/PTYlge2K1G8?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=251
+# This explains how datetime input data can be encoded
 
 # @ Spatial Pooling: Input Space & Connections (Episode 7), 4:10
 # https://youtu.be/R5UoFNtv5AU?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=250
 
-# c record: Make up some fake data composed of date data 
-# c record: and power consumption scalar data
+# c record: Make up some fake data composed of date type data 
+# c record: and power consumption as scalar data
 record = ['7/2/10 0:00', '21.2']
 
 # c dateString: convert date string '7/2/10 0:00' into Python date object
@@ -127,13 +133,13 @@ consumption = float(record[1])
 
 # --------------------------------------------------
 # To encode input data, 
-# you need to provide "numpy arrays" as placeholders to encoders
+# you need to provide "numpy arrays" to encoders as placeholders
 
 # @ Datetime Encoding (Episode 6), 3:39
 # https://youtu.be/PTYlge2K1G8?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=219
 # See "time of day"
 # It has 54 cells.
-# Even if it looks 2D array, just think of it 1D flattened array 
+# Even if it looks 2D array, just think of it as 1D flattened array 
 # when it's used in real code like following 
 # (504 length in following case)
 # print("timeOfDayBits",timeOfDayBits.shape)
@@ -145,6 +151,8 @@ weekendBits = np.zeros(weekendEncoder.getWidth())
 
 consumptionBits = np.zeros(scalarEncoder.getWidth())
 
+# c timeOfDayEncoder: get width length of timeOfDayEncoder
+# it's like equal to number of cells of "time of day" in video screenshot
 # timeOfDayEncoder.getWidth() 504
 # weekendEncoder.getWidth() 42
 # scalarEncoder.getWidth() 400
@@ -160,18 +168,20 @@ consumptionBits = np.zeros(scalarEncoder.getWidth())
 # @ Datetime Encoding (Episode 6), 3:39
 # https://youtu.be/PTYlge2K1G8?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=219
 # See "weekend"
-# weekendBits can be considered as 1D array filled by all 0s
+# weekendBits placeholder array can be considered as 1D array filled by all 0s
 # like all white cells without blue cells
-# Value 1s will be filled into weekendBits by encoder after finishing encoding
+# Values of 1 will be filled into weekendBits placeholder array 
+# by encoder after finishing encoding
 
 # In this sentence,
 # weekendEncoder.encodeIntoArray(dateString,weekendBits)
-# You have input data named dateString
-# You have placeholder input space named weekendBits
+# you have input data named dateString
+# you have placeholder input space named weekendBits
 # By using those 2, you can encode dateString data
 
 # Encoded data is what you can see under "weekend" in video screenshot
-# Datetime Encoding (Episode 6), 3:39
+# @ Datetime Encoding (Episode 6), 3:39
+# https://youtu.be/PTYlge2K1G8?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=219
 
 # c You perform encoding input data by using dateString (input data) and timeOfDayBits (input space array)
 timeOfDayEncoder.encodeIntoArray(dateString,timeOfDayBits)
@@ -182,7 +192,7 @@ weekendEncoder.encodeIntoArray(dateString,weekendBits)
 # @ Temporal Memory Part 1 (Episode 11), 1:38
 # https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=98
 # Green grid is input space
-# Green circles are on-bits in input space
+# Green circles in input space are on-bits
 
 # c You perform encoding input data by using consumption (input data) and consumptionBits (input space array)
 scalarEncoder.encodeIntoArray(consumption,consumptionBits)
@@ -191,6 +201,7 @@ scalarEncoder.encodeIntoArray(consumption,consumptionBits)
 # @ Datetime Encoding (Episode 6), 3:39
 # https://youtu.be/PTYlge2K1G8?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=219
 # See "entire encoding"
+# Following encoding is "entire encoding" after concatenation
 
 # c Concatenate all encodings into one entire encoding
 encoding=np.concatenate(
@@ -284,8 +295,11 @@ encodingWidth=timeOfDayEncoder.getWidth()+\
 
 # @ Temporal Memory Part 1 (Episode 11), 2:58
 # https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=178
-# Synapse structure
-# (connections between "spine" of one neuron and "other spine" of other neuron) 
+# Above screenshot shows synapse structure
+# (I guess above connections can be considered as connection 
+# between "spine" of one neuron and "other spine" of other neuron biologically like following images
+# https://www.google.com/search?q=neuron+spine&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiwiYik2KHgAhUEfrwKHWRmAJMQ_AUIDigB&biw=1881&bih=938) 
+
 # Take example of skin which is one of sensory organs for somatic sense.
 # There can be many areas on skin which can take stimulus from outside.
 # You can consider those many skin areas as many input spaces.
@@ -302,6 +316,13 @@ encodingWidth=timeOfDayEncoder.getWidth()+\
 # (one stimulus can fire multiple neurons in biological perspective)
 # And also I guess one input data can fire multiple cells in minicolumn
 
+# This is relevant explanation
+# @ SDR Capacity & Comparison (Episode 2), 0:45
+# https://youtu.be/ZDgCdWTuIzc?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=45
+# There are many auditory neurons in temporal lobe
+# Even if when you hear some sound, 
+# many of them are still inactive, only some neurons become active
+
 # I guess it sounds reasonable and efficient
 # if "multiple cells" in minicolumn extract different features and context from one input data
 
@@ -312,10 +333,10 @@ encodingWidth=timeOfDayEncoder.getWidth()+\
 # like threshold on permanance values in potential pools,
 # spatial pooler can extract various features from one input data.
 # And I guess those various features from one input data can be represented 
-# by various patterns of connection at each column to input data in input space.
+# by various patterns of connection at each column against input data in input space.
 
-# And I guess one final SDR in spatial pooler 
-# which semantically represents one input data is generated through above step.
+# And I guess "one final SDR" in spatial pooler 
+# which semantically represents "one input data" is generated through above step.
 
 # Anyway, final relationship seems 
 # like "one number of input data" corresponds to "one number of SDR in spatial pooler".
@@ -349,12 +370,15 @@ encodingWidth=timeOfDayEncoder.getWidth()+\
 # https://youtu.be/mPFx9yuV1Os?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=112
 # One cortical column is composed of thousands of pyramidal neurons (thousands of minicolumns)
 
-# Anyway, stimulus first comes into body via input space (sensory organ) 
+# Anyway, input data first comes into input space 
+# like stimulus first comes into body via sensory organ
 # and it's passed to spatial pooler.
 # And that's "proximal mechanism"
 # And spatial pooler processes that raw stimulus 
+# to extract features (and better feature when learning and boosting are allowed) of stimulus (input data)
+# to normalize it for it to have same sparcity
 
-# And I personally consider "distal mechanism" as connections (synapses biologically)
+# And I personally consider "distal mechanism" as connections (which is synapses biologically)
 # from spine (one cell in minicolumn) to other spine (other cell in minicolumn)
 
 # c sp: you create spatial pooler
@@ -412,6 +436,15 @@ sp=SpatialPooler(
 
 # How are those active columns determined?
 # You can (probably) configure parameter for overlap score
+# @ SDR Capacity & Comparison (Episode 2), 8:10
+# https://youtu.be/ZDgCdWTuIzc?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=490
+
+# @ SDR Capacity & Comparison (Episode 2), 10:52
+# https://youtu.be/ZDgCdWTuIzc?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=652
+# When you compare 2 SDRs to see whether they're match or not,
+# they don't need to be 100% matched to be matched.
+# Match or not match is determined based on configured threshold theta. 
+
 # And with that configured overlap score parameter,
 # and if some column in right spatial pooler has more number of connections 
 # (which are finally represented by green circles in left input space) 
@@ -431,7 +464,7 @@ sp=SpatialPooler(
 # https://youtu.be/rHvjykCIrZM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=427
 # Answer: as permanance values are dynamically up and down, 
 # connections can be created and destroyed
-# and it will make better connections from column to input data
+# and that adjusting will make better connections from column to input data
 
 # c activeColumns: Create "array" to represent "active columns" in spatial pooler SDR
 # c activeColumns: Placeholder for active columns is populated by spatial_pooler.compute()
@@ -575,7 +608,6 @@ showSDR(['7/2/10 2:00',5.5])
 
 # ======================================================================
 
-
 # c tm: creating TM
 tm=TemporalMemory(
     # Must be same dimensions as SP
@@ -660,14 +692,14 @@ for i,record in enumerate(records):
 
     # --------------------------------------------------
     # Temporal Memory Part 1 (Episode 11), 6:00
-    # Temporal memory learning sees all active columns (yellow ones) at first stage
+    # Temporal memory learning sees all active columns (yellow ones) at first stage of learing
     # Then, bursting is performed 
     # when there is no predictive cells in active columns
-    # In other words, bursting happens when temporal learning algorithm sees somehing for the first time
+    # In other words, bursting happens when temporal learning algorithm sees something for the first time
     # c Use temporal memory algorithm
     tm.compute(activeColumnIndices,learn=True)
 
-    # Get all cells from one column
+    # c get all cells from one column
     cells_per_col=tm.getCellsPerColumn()
     
     # c col_dim: get number of columns
@@ -983,6 +1015,9 @@ fig, ax = plt.subplots(2, 1, figsize=(15,2))
 ax[0].plot(range(400),d1,range(400),d2)
 ax[1].plot(range(1024),sdr1,range(1024),sdr2)
 
+# @ SDR Capacity & Comparison (Episode 2), 7:30
+# https://youtu.be/ZDgCdWTuIzc?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=450
+# About the overlap between 2 SDRs
 for a in ax:
     a.set_xticks([])
 print("Encoding Overlap = {}/{}".format(
