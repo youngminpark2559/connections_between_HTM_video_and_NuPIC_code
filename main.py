@@ -708,7 +708,14 @@ for i,record in enumerate(records):
     # @ Temporal Memory Part 1 (Episode 11), 16:30
     # https://youtu.be/UBzemKcUoOk?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=990
     # Another meaning of winner cell is for selecting specific cell based on context
-    # eat' which is followed by boys is represented by winner cells as screenshot
+    # The word eat' which is followed by boys in the sequential context is represented 
+    # by winner 3 glittering cells as screenshot
+    # So, note that raw representation on word eat (having all cells at 1st, 5th, (last-1)th)
+    # (see "eat" under "Active cells (before learning)")
+    # is different with representation (having 3 glittering cells in each column at 1st, 5th, (last-1)th) 
+    # on eat' which is shown in the context of boys and many'
+    # In this way, computer can distinguish those same word but showing in different context
+    # and can learn it
 
     # @ Temporal Memory Part 2 (Episode 12), 3:35
     # https://youtu.be/1OhY_u3NjdM?list=PL3yXMgtrZmDqhsFQzwUC9V8MeeVOQ7eZ9&t=215
